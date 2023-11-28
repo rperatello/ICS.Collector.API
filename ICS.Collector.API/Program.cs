@@ -1,4 +1,4 @@
-using PRS.Collector.BackgroundServices;
+using ICS.Collector.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,16 +1,16 @@
 ﻿using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
-using ICS.Models.Builders;
-using ICS.Models.Enumerators;
-using ICS.Models.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PRS.Collector.BackgroundServices;
+using ICS.Collector.BackgroundServices;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using ICS.Models.Models;
+using ICS.Models.Builders;
+using ICS.Models.Enumerators;
 
 namespace ICS.Collector.Controllers
 {
@@ -38,6 +38,22 @@ namespace ICS.Collector.Controllers
                     investiments = ColectBB();
 
                 return Ok(JsonConvert.SerializeObject(investiments));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet("investiments")]
+        [AllowAnonymous]
+        public async Task<ActionResult> Investiments()
+        {
+            try
+            {
+                var result = GetAllInvestment();
+
+                return Ok(JsonConvert.SerializeObject(result));
             }
             catch (Exception e)
             {
@@ -234,6 +250,31 @@ namespace ICS.Collector.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
+        }
+
+        private List<InvestmentFund> GetAllInvestment()
+        {
+            List<InvestmentFund> list = new List<InvestmentFund>();
+
+
+            JObject bbInvestiments = collectorService.Get_BBInvestiments();
+            if (bbInvestiments == null)
+                bbInvestiments = ColectBB();
+            if (bbInvestiments != null)
+            {
+                foreach (var property in bbInvestiments.Properties())
+                {
+                    JToken data = property.Value["data"];
+
+                    if (data != null && data.Type == JTokenType.Array)
+                    {
+                        List<InvestmentFund> propertyItens = data.ToObject<List<InvestmentFund>>();
+                        list.AddRange(propertyItens);
+                    }
+                }
+            }
+
+            return list;
         }
 
 

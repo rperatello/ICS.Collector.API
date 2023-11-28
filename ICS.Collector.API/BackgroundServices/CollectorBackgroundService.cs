@@ -1,15 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using ICS.Models.Models;
 using Newtonsoft.Json.Linq;
-using ICS.Models.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace PRS.Collector.BackgroundServices
+namespace ICS.Collector.BackgroundServices
 {
     public class CollectorBackgroundService : BackgroundService
     {

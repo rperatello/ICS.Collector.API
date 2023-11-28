@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ICS.Collector.API", "ICS.Collector.API\ICS.Collector.API.csproj", "{770244C7-6D52-4453-826B-B85682F36A5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ICS.Models", "..\ICS.Models\ICS.Models\ICS.Models.csproj", "{3ACF1FE1-CA9F-4889-AB50-FED2867C54BE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{770244C7-6D52-4453-826B-B85682F36A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{770244C7-6D52-4453-826B-B85682F36A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{770244C7-6D52-4453-826B-B85682F36A5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3ACF1FE1-CA9F-4889-AB50-FED2867C54BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3ACF1FE1-CA9F-4889-AB50-FED2867C54BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3ACF1FE1-CA9F-4889-AB50-FED2867C54BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3ACF1FE1-CA9F-4889-AB50-FED2867C54BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
