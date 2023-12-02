@@ -1,3 +1,5 @@
+using AutoMapper;
+using ICS.Collector.API.Mapper;
 using ICS.Collector.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,10 +10,29 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<CollectorBackgroundService>();
 builder.Services.AddHostedService<CollectorBackgroundService>(provider => provider.GetService<CollectorBackgroundService>());
+#endregion
+
+#region Mappers
+
+builder.Services.AddSingleton(new MapperConfiguration(config =>
+    config.ToIpcaDto()
+).CreateMapper());
 
 #endregion
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,7 +46,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Ativa o sistema de roteamento
+app.UseRouting();
+
+//app.UseHttpsRedirection();
+
+// Ativa a política CORS configurada em ConfigureServices
+app.UseCors();
 
 app.UseAuthorization();
 

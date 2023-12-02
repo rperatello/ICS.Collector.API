@@ -11,6 +11,8 @@ using System.Text;
 using ICS.Models.Models;
 using ICS.Models.Builders;
 using ICS.Models.Enumerators;
+using AutoMapper;
+using ICS.Collector.API.DTO;
 
 namespace ICS.Collector.Controllers
 {
@@ -20,10 +22,12 @@ namespace ICS.Collector.Controllers
     {
 
         private CollectorBackgroundService collectorService;
+        private readonly IMapper _mapper;
 
-        public CollectorController(CollectorBackgroundService hostedService)
+        public CollectorController(CollectorBackgroundService hostedService, IMapper mapper)
         {
-            this.collectorService = hostedService;
+            collectorService = hostedService;
+            _mapper = mapper;
         }
 
         [HttpGet("bbinvestiments")]
@@ -114,9 +118,11 @@ namespace ICS.Collector.Controllers
 
                     list = JsonConvert.DeserializeObject<List<Ipca>>(JToken.Parse(responseIBGEAPI.Content.ReadAsStringAsync().Result).ToString());
 
+                    list?.RemoveAt(0);
+
                     collectorService.Set_Ipca_Monthly_Variation_Last_12_Periods(list);
                 }
-                return Ok(JsonConvert.SerializeObject(list));
+                return Ok(_mapper.Map<List<IpcaDto>>(list));
             }
             catch (Exception e)
             {
